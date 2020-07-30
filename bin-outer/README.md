@@ -1,19 +1,7 @@
-# bin-outer
+# Vue-Router 源码解析
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 插件Vue.use(plugin,arguments)
+plugin：函数/对象；{Object | Function} plugin
+函数:直接执行；
+对象：必须存在install函数；
+### plugin(Vue,args)

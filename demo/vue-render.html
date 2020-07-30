@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<body>
+    <div id="app"></div>
+</body>
+<script>
+Vue.component('heading-template', {
+    template: '<h1>hello</h1>'
+})
+Vue.component('heading-render', {
+  render: function (createElement) {
+    return createElement(
+      'h1',   // 标签名称
+      'hello' //内容
+    )
+  }
+})
+let vm = new Vue({
+    el:"#app",
+    data:{
+        bin:"binbin"
+    },
+    render:creatElement=>creatElement('button-counter')
+})
+</script>
+</html>
+<!-- 
+    组件：
+    1、使用template来定义内容（需要通过模版编译转化后再渲染出来）;
+    2、render函数，无需模版编译转化;
+    Vue.component('heading-template', {
+      template: '<h1>hello</h1>'
+    })
+    Vue.component('heading-render', {
+        render: function (createElement) {
+            return createElement(
+            'h1',   // 标签名称
+            'hello' //内容
+            )
+        }
+    })
+ -->
