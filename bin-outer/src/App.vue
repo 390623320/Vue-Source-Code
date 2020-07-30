@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-link to="/">home</router-link> &nbsp;&nbsp;&nbsp;
+    <router-link to="/about">about</router-link>
+    <router-view>
+
+    </router-view>
   </div>
 </template>
 
@@ -12,6 +15,8 @@ export default {
   name: 'App',
   components: {
     HelloWorld
+  },
+  created() {
   }
 }
 </script>
