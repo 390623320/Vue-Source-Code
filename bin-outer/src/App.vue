@@ -17,6 +17,7 @@ export default {
     HelloWorld
   },
   created() {
+    console.dir(this)
   }
 }
 </script>
