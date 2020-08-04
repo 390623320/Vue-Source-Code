@@ -7,6 +7,7 @@ class brouter {
         Vue.mixin({
             beforeCreate(){
                 if(this.$options.router){//Vue实例存在router时生效
+                    Vue.prototype.$brouter = this.$options.router; //挂载brouter到Vue实例上
                     this.$options.router._init();//路由入口
                 }
             }
@@ -20,7 +21,8 @@ class brouter {
                 route:""
             }
         })
-    }
+        
+    } 
     // 1、监听hashchange事件
     _init(){//启动路由
         this.bindEvent();//绑定hash事件
@@ -31,13 +33,24 @@ class brouter {
         window.addEventListener("hashchange",this.onHashChange.bind(this),false)
         window.addEventListener("load",this.initHashChange.bind(this),false);
     }
-    onHashChange(){
+    getHash(){
+        return window.location.hash.slice(1) || "/"
+    };
+    onHashChange(e){
         // 监听路由变化
-        this.app.route = window.location.hash.slice(1);
+        const { from,to } = this.getPath(e);
+        if(this.routerMap[this.getHash()].beforeEnter){
+            this.routerMap[this.getHash()].beforeEnter(from,to,()=>{
+                this.app.route = this.getHash(); //next
+            });//路由守卫
+        }else{
+            this.app.route = this.getHash(); //通知VM实例订阅内容更新视图           
+        }
     }
     initHashChange(){
         // 初始化路由
-        this.app.route = window.location.hash.slice(1) || "/"
+        this.app.route = window.location.hash.slice(1) || "/";
+        this.routerMap[this.app.route].beforeEnter(); //路由守卫
     }
     // 2、路由表处理
     _initRouterMap(){
@@ -62,7 +75,7 @@ class brouter {
                         href : "#" + this.to 
                     }
                 },
-                this.$slots.default // 子节点数组
+                [this.$slots.default] // 子节点数组
               )
             },
             props: {
@@ -74,6 +87,14 @@ class brouter {
           })
     }
     // 4、生命周期 路由守卫
+    getPath(e){//获取跳转前后的路由信息
+        let { newURL = "",oldURL = "" } = e;
+        return {from:oldURL.split("#")[1],to:newURL.split("#")[1]};
+    }
+    //编程式路由
+    push = (path)=>{
+        window.location.href = "#" + path;
+    }
 }
 
 export default brouter;

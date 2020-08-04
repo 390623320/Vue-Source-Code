@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <router-link to="/">home</router-link> &nbsp;&nbsp;&nbsp;
-    <router-link to="/about">about</router-link>
+    <router-link to="/">home</router-link> &nbsp;
+    <router-link to="/about">about</router-link> &nbsp;
+    <span @click="goPath">about</span>
     <router-view>
 
     </router-view>
@@ -9,16 +10,14 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  methods: {
+    goPath(){
+      this.$brouter.push("/about")
+    }
   },
-  created() {
-    console.dir(this)
-  }
 }
 </script>
 

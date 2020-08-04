@@ -11,7 +11,11 @@ const router = new brouter({
         },
         {
             path:"/about",
-            component:About
+            component:About,
+            beforeEnter: (to, from, next) => { //路由守卫
+                console.log("to, from",to, from) 
+                next();
+            }
         }
     ]
 });
